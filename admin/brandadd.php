@@ -1,32 +1,32 @@
-﻿<?php include 'inc/header.php';?>
+<?php include 'inc/header.php';?>
 <?php include 'inc/sidebar.php';?>
-<?php include '../classes/category.php';?>
+<?php include '../classes/brand.php';?>
 <?php
-	$cat = new category();
+	$brand = new brand();
 	if($_SERVER['REQUEST_METHOD'] == 'POST'){
-		$catName = $_POST['catName'];
+		$brandName = $_POST['brandName'];
 
-		$insertCat = $cat->insert_category($catName) ;
+		$insertBrand = $brand->insert_brand($brandName) ;
 	}
 ?>
 
         <div class="grid_10">
             <div class="box round first grid">
-                <h2>Thêm danh mục</h2>
-                <?php
-                    if (isset($insertCat)) echo $insertCat;                    
-                ?>
+                <h2>Thêm thương hiệu</h2>
                <div class="block copyblock"> 
-                 <form action="catadd.php" method="POST">
+                <?php
+                    if (isset($insertBrand)) echo $insertBrand;                    
+                ?>
+                 <form action="brandadd.php" method="POST">
                     <table class="form">					
                         <tr>
                             <td>
-                                <input type="text" name="catName" placeholder="Nhập tên danh mục ..." class="medium" />
+                                <input type="text" name="brandName" placeholder="Nhập tên thương hiệu ..." class="medium" />
                             </td>
                         </tr>
 						<tr> 
                             <td>
-                                <input type="submit" name="submit" Value="Lưu" />
+                                <input type="submit" name="submit" Value="Thêm" />
                             </td>
                         </tr>
                     </table>

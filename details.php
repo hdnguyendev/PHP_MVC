@@ -2,7 +2,13 @@
 include 'inc/header.php';
 include 'inc/slider.php';
 ?>
-
+<?php
+	if (!isset($_GET['productid']) || $_GET['productid'] == NULL) {
+		echo "<script>window.location = '404.php'</script>";
+	} else {
+		$id = $_GET['productid'];
+	}
+?>
 <div class="main">
 	<div class="content">
 		<div class="section group">
@@ -36,17 +42,7 @@ include 'inc/slider.php';
 				<h2>CATEGORIES</h2>
 				<ul>
 					<li><a href="productbycat.php">Mobile Phones</a></li>
-					<li><a href="productbycat.php">Desktop</a></li>
-					<li><a href="productbycat.php">Laptop</a></li>
-					<li><a href="productbycat.php">Accessories</a></li>
-					<li><a href="productbycat.php">Software</a></li>
-					<li><a href="productbycat.php">Sports & Fitness</a></li>
-					<li><a href="productbycat.php">Footwear</a></li>
-					<li><a href="productbycat.php">Jewellery</a></li>
-					<li><a href="productbycat.php">Clothing</a></li>
-					<li><a href="productbycat.php">Home Decor & Kitchen</a></li>
-					<li><a href="productbycat.php">Beauty & Healthcare</a></li>
-					<li><a href="productbycat.php">Toys, Kids & Babies</a></li>
+					
 				</ul>
 
 			</div>

@@ -6,7 +6,7 @@ include_once($filepath.'/../helpers/format.php');
 ?>
 
 <?php
-class cart
+class user
 {
     private $db;
     private $fm;
@@ -16,5 +16,4 @@ class cart
         $this->db = new Database();
         $this->fm = new Format();
     }
-    
 }

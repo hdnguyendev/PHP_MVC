@@ -16,7 +16,7 @@
 
         <div class="grid_10">
             <div class="box round first grid">
-                <h2>Category List</h2>
+                <h2>Brand List</h2>
                 <div class="block">    
 					<?php
 					if (isset($delBrand)) echo $delBrand;

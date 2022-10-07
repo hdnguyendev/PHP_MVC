@@ -17,25 +17,25 @@ class product
     }
     public function insert_product($data, $files)
     {
-        
+
         $productName = mysqli_real_escape_string($this->db->link, $data['productName']);
         $brand = mysqli_real_escape_string($this->db->link, $data['brand']);
         $category = mysqli_real_escape_string($this->db->link, $data['category']);
         $productDesc = mysqli_real_escape_string($this->db->link, $data['productDesc']);
         $price = mysqli_real_escape_string($this->db->link, $data['price']);
         $type = mysqli_real_escape_string($this->db->link, $data['type']);
-     
-        $permited = array('jpg','jpeg','png','gif');
+
+        $permited = array('jpg', 'jpeg', 'png', 'gif');
         $file_name = $_FILES['image']['name'];
         $file_size = $_FILES['image']['size'];
         $file_temp = $_FILES['image']['tmp_name'];
 
         $div = explode('.', $file_name);
         $file_ext = strtolower(end($div));
-        $unique_image = substr(md5(time()),0,10).'.'.$file_ext;
-        $uploaded_image = "uploads/".$unique_image;
+        $unique_image = substr(md5(time()), 0, 10) . '.' . $file_ext;
+        $uploaded_image = "uploads/" . $unique_image;
 
-        if ($productName == "" || $brand == "" ||$category == "" ||$productDesc == "" ||$price == "" ||$type == "" ||$file_name == "") {
+        if ($productName == "" || $brand == "" || $category == "" || $productDesc == "" || $price == "" || $type == "" || $file_name == "") {
             $alert = "<span class='error'>Fields must be not empty!</span>";
             return $alert;
         } else {
@@ -51,17 +51,60 @@ class product
             }
         }
     }
-    public function edit_product($catId, $new_catName)
+    public function edit_product($productId, $data, $files)
     {
-        $new_catName = $this->fm->validation($new_catName);
-        
-        $new_catName = mysqli_real_escape_string($this->db->link, $new_catName);
-        $catId = mysqli_real_escape_string($this->db->link, $catId);
-        if (empty($new_catName)) {
-            $alert = "<span class='error'>product must be not empty!</span>";
+        $productName = mysqli_real_escape_string($this->db->link, $data['productName']);
+        $brand = mysqli_real_escape_string($this->db->link, $data['brand']);
+        $category = mysqli_real_escape_string($this->db->link, $data['category']);
+        $productDesc = mysqli_real_escape_string($this->db->link, $data['productDesc']);
+        $price = mysqli_real_escape_string($this->db->link, $data['price']);
+        $type = mysqli_real_escape_string($this->db->link, $data['type']);
+
+        $permited = array('jpg', 'jpeg', 'png', 'gif');
+        $file_name = $_FILES['image']['name'];
+        $file_size = $_FILES['image']['size'];
+        $file_temp = $_FILES['image']['tmp_name'];
+
+        $div = explode('.', $file_name);
+        $file_ext = strtolower(end($div));
+        $unique_image = substr(md5(time()), 0, 10) . '.' . $file_ext;
+        $uploaded_image = "uploads/" . $unique_image;
+
+        if ($productName == "" || $brand == "" || $category == "" || $productDesc == "" || $price == "" || $type == "") {
+            $alert = "<span class='error'>Fields must be not empty!</span>";
             return $alert;
         } else {
-            $query = "UPDATE tbl_product SET catName = '$new_catName' WHERE catId = '$catId'";
+            if (!empty($file_name)) {
+                if ($file_size > 100000) {
+                    $alert = "<span class='error'>Image size should be less then 10MB!</span>";
+                    return $alert;
+                } elseif (in_array($file_ext, $permited) === false) {
+                    $alert = "<span class='error'><span class='error'>You can upload only: " . implode(', ', $permited) . "</span></span>";
+                    return $alert;
+                }
+
+                move_uploaded_file($file_temp, $uploaded_image);
+
+                $query = "UPDATE tbl_product SET 
+                productName = '$productName',
+                brandId='$brand',
+                catId = '$category',
+                productDesc = '$productDesc',
+                price = '$price',
+                type = '$type' ,
+                image = '$unique_image'
+
+                WHERE productId = '$productId'";
+            } else {
+                $query = "UPDATE tbl_product SET 
+                productName = '$productName',
+                brandId='$brand',
+                catId = '$category',
+                productDesc = '$productDesc',
+                price = '$price',
+                type = '$type' 
+                WHERE productId = '$productId'";
+            }
             $result = $this->db->update($query);
             if ($result) {
                 $alert = "<span class='success'>Update product Successfully</span>";
@@ -74,7 +117,7 @@ class product
     }
     public function del_product($delId)
     {
-        $query = "DELETE FROM tbl_product WHERE catId = '$delId'";
+        $query = "DELETE FROM tbl_product WHERE productId = '$delId'";
         $result = $this->db->delete($query);
         if ($result) {
             $alert = "<span class='success'>Delete product Successfully</span>";

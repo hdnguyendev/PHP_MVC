@@ -7,14 +7,20 @@
 <?php
 $fm = new Format();
 $pd = new product();
-$cat = new category();
-$brand = new brand();
+
+if (isset($_GET['productid'])) {
+	$id = $_GET['productid'];
+	$delProduct = $pd->del_product($id);
+}
 
 ?>
 <div class="grid_10">
 	<div class="box round first grid">
 		<h2>Post List</h2>
 		<div class="block">
+			<?php 
+				if (isset($delProduct)) echo $delProduct;
+			?>
 			<table class="data display datatable" id="example">
 				<thead>
 					<tr>
@@ -49,7 +55,7 @@ $brand = new brand();
 								<td><?php echo $fm->textShorten($result['productDesc'], 50) ?></td>
 								<td><?php if ($result['type'] == 1) echo "Feathered";
 									else echo "Non-Feathered"; ?></td>
-								<td><a href="productedit.php?productId=<?php echo $result['productId']?>">Edit</a> || <a href="?productId=<?php echo $result['productId']?>">Delete</a></td>
+								<td><a href="productedit.php?productid=<?php echo $result['productId'] ?>">Edit</a> || <a  onclick="return confirm('Are you want to delete?')" href="?productid=<?php echo $result['productId'] ?>">Delete</a></td>
 							</tr>
 					<?php
 						}

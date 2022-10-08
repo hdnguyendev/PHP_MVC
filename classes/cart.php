@@ -82,4 +82,11 @@ class cart
         $result = $this->db->select($query);
         return $result;
     }
+    public function del_all_data_cart()
+    {
+        $sessionId = session_id();
+        $query = "DELETE FROM tbl_cart WHERE sessionId = '$sessionId'";
+        $result = $this->db->delete($query);
+        return $result;
+    }
 }

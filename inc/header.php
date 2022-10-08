@@ -86,7 +86,24 @@ header("Cache-Control: max-age=2592000");
                         </a>
                     </div>
                 </div>
-                <div class="login"><a href="login.php">Login</a></div>
+                <?php
+                if (isset($_GET['customerid'])) {
+                    $delCart = $cart->del_all_data_cart();
+
+                    Session::destroy();
+                }
+                ?>
+                <div class="login">
+                    <?php
+                    $login_check = Session::get("customer_login");
+                    if (!$login_check) {
+                        echo "<a href='login.php'>Login</a>";
+                    } else {
+                        echo "<a href='?customerid=" . Session::get("customer_id") . "'>Logout</a>";
+                    }
+                    ?>
+
+                </div>
                 <div class="clear"></div>
             </div>
             <div class="clear"></div>
@@ -97,6 +114,16 @@ header("Cache-Control: max-age=2592000");
                 <li><a href="products.php">Products</a> </li>
                 <li><a href="topbrands.php">Top Brands</a></li>
                 <li><a href="cart.php">Cart</a></li>
+                <?php
+                if ($login_check) {
+
+
+
+                ?>
+                    <li><a href="profile.php">Profile</a> </li>
+                <?php
+                }
+                ?>
                 <li><a href="contact.php">Contact</a> </li>
                 <div class="clear"></div>
             </ul>

@@ -2,34 +2,50 @@
 	include 'inc/header.php';
 	// include 'inc/slider.php';
 ?>
-<?php 
+<?php
 
+	$login_check = Session::get("customer_login");
+	if ($login_check) {
+		header('Location: order.php');
+	} 
 
 ?>
 <?php
-	if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])){
-		$insertCustomer= $cs->insert_customer($_POST) ;
+	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
+		$insertCustomer = $cs->insert_customer($_POST);
+	}
+?>
+
+<?php
+	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
+		$loginCustomer = $cs->login_customer($_POST);
+		// $_POST['emailLogin'], $_POST['passwordLogin']
 	}
 ?>
 <div class="main">
 	<div class="content">
-		// Login
 		<div class="login_panel">
 			<h3>Existing Customers</h3>
 			<p>Sign in with the form below.</p>
-			<form action="hello" method="get" id="member">
-				<input name="Domain" type="text" name="usernameLogin" class="field" placeholder="Username">
-				<input name="Domain" type="password" name="passwordLogin" class="field" placeholder="Password">
+			<?php
+			if (isset($loginCustomer)) echo $loginCustomer;
+			?>
+			<form action="" method="POST">
+				<input type="text" name="emailLogin" class="field" placeholder="Email">
+				<input type="password" name="passwordLogin" class="field" placeholder="Password">
+				<div><input type="submit" name="login" class="grey" value="Sign in"></div>
 			</form>
-			<p class="note">If you forgot your passoword just enter your email and click <a href="#">here</a></p>
+			<p class="note">If you forgot your password just enter your email and click <a href="#">here</a></p>
 			<div class="buttons">
-				<div><button class="grey">Sign In</button></div>
+
 			</div>
 		</div>
 
-		// Register
 		<div class="register_account">
 			<h3>Register New Account</h3>
+			<?php
+			if (isset($insertCustomer)) echo $insertCustomer;
+			?>
 			<form action="" method="POST">
 				<table>
 					<tbody>
@@ -52,12 +68,12 @@
 							</td>
 							<td>
 								<div>
-									<input type="text" name="email" placeholder="Address">
+									<input type="text" name="address" placeholder="Address">
 								</div>
 								<div>
 									<select id="country" name="country" onchange="change_country(this.value)" class="frm-field required">
 										<option value="null">Select a Country</option>
-										<option value="AF">Afghanistan</option>
+										<option value="VN">Việt Nam</option>
 										<option value="AL">Albania</option>
 										<option value="DZ">Algeria</option>
 										<option value="AR">Argentina</option>
@@ -95,5 +111,5 @@
 	</div>
 </div>
 <?php
-	include('inc/footer.php');
+include('inc/footer.php');
 ?>

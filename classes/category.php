@@ -82,4 +82,11 @@ class category
         $result = $this->db->select($query);
         return $result;
     }
+    public function show_category_frontend()
+    {
+        $query = "SELECT * FROM tbl_category ORDER BY catId desc";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
 }

@@ -1,46 +1,58 @@
 <?php
 	include 'inc/header.php';
-	include 'inc/slider.php';
+	// include 'inc/slider.php';
+?>
+<?php 
+
+
+?>
+<?php
+	if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])){
+		$insertCustomer= $cs->insert_customer($_POST) ;
+	}
 ?>
 <div class="main">
 	<div class="content">
+		// Login
 		<div class="login_panel">
 			<h3>Existing Customers</h3>
 			<p>Sign in with the form below.</p>
 			<form action="hello" method="get" id="member">
-				<input name="Domain" type="text" value="Username" class="field" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Username';}">
-				<input name="Domain" type="password" value="Password" class="field" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
+				<input name="Domain" type="text" name="usernameLogin" class="field" placeholder="Username">
+				<input name="Domain" type="password" name="passwordLogin" class="field" placeholder="Password">
 			</form>
 			<p class="note">If you forgot your passoword just enter your email and click <a href="#">here</a></p>
 			<div class="buttons">
 				<div><button class="grey">Sign In</button></div>
 			</div>
 		</div>
+
+		// Register
 		<div class="register_account">
 			<h3>Register New Account</h3>
-			<form>
+			<form action="" method="POST">
 				<table>
 					<tbody>
 						<tr>
 							<td>
 								<div>
-									<input type="text" value="Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}">
+									<input type="text" name="name" placeholder="Name">
 								</div>
 
 								<div>
-									<input type="text" value="City" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'City';}">
+									<input type="text" name="city" placeholder="City">
 								</div>
 
 								<div>
-									<input type="text" value="Zip-Code" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Zip-Code';}">
+									<input type="text" name="zipcode" placeholder="Zipcode">
 								</div>
 								<div>
-									<input type="text" value="E-Mail" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'E-Mail';}">
+									<input type="text" name="email" placeholder="Email">
 								</div>
 							</td>
 							<td>
 								<div>
-									<input type="text" value="Address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Address';}">
+									<input type="text" name="email" placeholder="Address">
 								</div>
 								<div>
 									<select id="country" name="country" onchange="change_country(this.value)" class="frm-field required">
@@ -62,18 +74,18 @@
 								</div>
 
 								<div>
-									<input type="text" value="Phone" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Phone';}">
+									<input type="text" name="phone" placeholder="Phone">
 								</div>
 
 								<div>
-									<input type="text" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
+									<input type="text" name="passwordRegister" placeholder="Password">
 								</div>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 				<div class="search">
-					<div><button class="grey">Create Account</button></div>
+					<div><input type="submit" name="submit" class="grey" value="Create Account"></div>
 				</div>
 				<p class="terms">By clicking 'Create Account' you agree to the <a href="#">Terms &amp; Conditions</a>.</p>
 				<div class="clear"></div>

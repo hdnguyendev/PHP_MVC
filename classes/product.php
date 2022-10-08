@@ -1,7 +1,7 @@
 <?php
 $filepath = realpath(dirname(__FILE__));
-include_once($filepath.'/../lib/database.php');
-include_once($filepath.'/../helpers/format.php');
+include_once($filepath . '/../lib/database.php');
+include_once($filepath . '/../helpers/format.php');
 
 ?>
 
@@ -155,6 +155,22 @@ class product
     public function getProduct_new()
     {
         $query = "SELECT * FROM tbl_product ORDER BY productId DESC LIMIT 4";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    public function get_details($id)
+    {
+        $query = " SELECT tbl_product.*, tbl_category.catName, tbl_brand.brandName 
+        FROM tbl_product 
+        INNER JOIN tbl_category ON tbl_product.catId = tbl_category.catId
+        INNER JOIN tbl_brand ON tbl_product.brandId = tbl_brand.brandId
+        WHERE tbl_product.productId = '$id' LIMIT 1";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    public function get_product_byCat($id)
+    {
+        $query = "SELECT * FROM tbl_product WHERE catId = '$id' ORDER BY catId desc LIMIT 8";
         $result = $this->db->select($query);
         return $result;
     }
